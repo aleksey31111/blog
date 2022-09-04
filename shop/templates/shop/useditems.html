@@ -1,0 +1,57 @@
+{% load static %}
+{% load shop_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="header">
+        <div class="wrap">
+            <ul class="meinmenu">
+                <li class="logo">
+                    <a href="{% url 'index' %}">
+                        <div class="logo">Главная</div>
+                    </a>
+                </li>
+                {% for m in menu %}
+                <li class="last">
+                    <a href="{% url m.url_name %}">
+                        {{ m.title }}
+                    </a>
+                </li>
+                {% endfor %}
+                {% if request.user.is_authenticated %}
+                <li class="last">{{ user.username }} | <a href="{% url 'logout' %}">Выйти</a></li>
+                {% else %}
+                <li class="last"><a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Войти</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    {{ title }}
+
+    {% for i in useditems %}
+    <div>
+    <p>{{ i.thing }}</p>
+    {% if i.foto %}
+    <p><img src="{{ i.foto.url }}" class="image" alt=""></p>
+    {% endif %}
+    <p>{{ i.description }}</p>
+    <p>{{ time }}</p>
+    <p>{{ time_safe }}</p>
+    <p>{{ place }}</p>
+    <p>{{ defect_out }}</p>
+    <p>{{ defect_in }}</p>
+    <p>{{ is_available }}</p>
+    </div>
+    <hr>
+
+
+    {% endfor %}
+
+</body>
+</html>

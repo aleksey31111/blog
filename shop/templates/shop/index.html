@@ -1,0 +1,40 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<ul>
+    <div class="menu">
+        <ul>
+            <li><a href="{% url 'useditems' %}"><h2>Подержанные устройства</h2></a></li>
+            <li><a href="{% url 'firstpage' %}"><h2>Каталог ремонта оборудования</h2></a></li>
+        </ul>
+    </div>
+<!--    <h2><a href="{% url 'useditems' %}">Подержанные устройства</a></h2>-->
+<!--    <h2><a href="{% url 'firstpage' %}">Услуги ремонта</a></h2>-->
+
+    {% for p in posts %}
+
+    <li>
+
+        <p class="first">Категория: {{ p.cat }}</p>
+
+
+        <div class="text">
+            <h2><a href="{{ p.get_absolut_url }}">Товар: {{ p.thing }}</a></h2>
+            {% if p.foto %}
+            <img src="{{ p.foto.url }}" class="image" alt="">
+            {% else %}
+            <img src="{% static 'shop/default.jpg'  %}" class="image" alt="">
+            {% endif %}
+            <p>Описание: {{ p.description|striptags|truncatewords:10 }}</p>
+            <p>Цена: {{ p.cost }}</p>
+        </div>
+        <p class="first">Время: {{ p.time_update|date:"d l-m-Y H:i:s" }}</p>
+        <p class="first">Есть в наличие: {{ p.is_available }}</p>
+
+    </li>
+    {% endfor %}
+
+</ul>
+{% endblock %}

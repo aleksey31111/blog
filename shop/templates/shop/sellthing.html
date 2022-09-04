@@ -1,0 +1,12 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<form action="{% url 'sell_thing' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-error">{{ form.non_field_error }}</div>
+    {{ form.as_p }}
+    <button>Отправить на рассмотрение</button>
+</form>
+
+{% endblock %}
